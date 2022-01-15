@@ -4,7 +4,7 @@ const routes = require('./routes')
 
 server.use(express.static('public'));
 server.set('view engine', 'ejs');
-server.use('/', routes);
+server.use(routes);
 
 
 
