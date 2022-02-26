@@ -10,7 +10,6 @@ const profile = {
     "vacation-per-year": 2
 }
 
-
 const filePath = __dirname + '/views/'
 
 routes.get('/', (req,res) => res.render(filePath + "index", {profile: profile}));
