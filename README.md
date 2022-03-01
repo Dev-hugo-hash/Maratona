@@ -7,6 +7,8 @@
    Etapa 1/4, Criar rotas e utilizar o template EJS para deixar um código mais limpo 
 </h2>
 <br>
+<h2> Etapa 2/4, Tratar os formulários, criar rotas Post, Salvar Jobs, Editar, Deletar Jobs, Criar Calculo de horas </h2>
+<br>
 <h3> 
   Vale ressaltar que este projeto está sendo feito após a aula 1 da maratona discover, após absorver o conteudo da aula, estou aplicando sozinho neste projeto
 </h3>
