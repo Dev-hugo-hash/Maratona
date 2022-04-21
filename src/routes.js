@@ -21,8 +21,18 @@ routes.get('/', (req,res) => res.render(filePath + "index", {profile: profile}))
 routes.get('/job', (req,res) => res.render(filePath + "job"));
 routes.post('/job', (req,res) => {
 
-    jobs.push(req.body);
+    //req.body{name: 'ksksks', ...}
+    //const job = req.body;
+    //Atribuindo nova data (Agora) 
+    const lastId = jobs[jobs.length - 1]?.id || 1;
 
+    jobs.push({
+        id: lastId + 1,
+        name: req.body.name,
+        "daily-hours": req.body["daily-hours"],
+        "total-hours": req.body["total-hours"],   
+        created_at = Date.now()
+    });
     return res.redirect('/')
 
 });
