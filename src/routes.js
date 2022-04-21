@@ -11,19 +11,29 @@ const profile = {
 }
 
 const jobs = [
-
-
+    {
+        id:1,
+        name: "Pizzaria Grego",
+        "daily-hours": 2,
+        "total-hours": 60,   
+        created_at: Date.now()
+    },
+    {
+        id:2,
+        name: "One Two Project",
+        "daily-hours": 3,
+        "total-hours": 47,   
+        created_at: Date.now()
+    }
 ]
 
 const filePath = __dirname + '/views/'
 
-routes.get('/', (req,res) => res.render(filePath + "index", {profile: profile}));
+routes.get('/', (req,res) => res.render(filePath + "index", {profile: profile, jobs }));
 routes.get('/job', (req,res) => res.render(filePath + "job"));
 routes.post('/job', (req,res) => {
 
-    //req.body{name: 'ksksks', ...}
-    //const job = req.body;
-    //Atribuindo nova data (Agora) 
+
     const lastId = jobs[jobs.length - 1]?.id || 1;
 
     jobs.push({
@@ -31,8 +41,9 @@ routes.post('/job', (req,res) => {
         name: req.body.name,
         "daily-hours": req.body["daily-hours"],
         "total-hours": req.body["total-hours"],   
-        created_at = Date.now()
+        created_at: Date.now()
     });
+
     return res.redirect('/')
 
 });
