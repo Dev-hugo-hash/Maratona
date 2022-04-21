@@ -1,7 +1,7 @@
 const express = require('express');
 const routes = express.Router()
 
-const profile = {
+const Profile = {
     
     data: {
 
@@ -14,13 +14,43 @@ const profile = {
         "value-hour": 75
 
     },
+
     controllers :{
 
-        index(){
+        index(req, res){
 
-           return res.render(filePath + "profile", {profile: profile.data})
+           return res.render(filePath + "profile", {profile: Profile.data})
 
         },
+        update(req,res){
+            //req.body para pegar os dados
+            const data = req.body;
+
+            //definir semanas ao ano: 52
+
+            const weeksPerYear = 52;
+
+            //remover as semanas de ferias do ano, para pegar quantas semanas tem em um mes
+            const weeksPerMonth = (weeksPerYear - data["vacation-per-year"]) / 12;//Quantas semanas estou trabalhando no mes 
+
+            //horas trabalhadas na semana
+            const weeksTotalHours = data["hours-per-day"] * data["days-per-week"];
+
+            //horas por mes
+            const monthlyTotalHours = weeksTotalHours * weeksPerMonth;
+            
+            //total de horas trabalhadas no mes
+            const valueHour  = data["monthly-budget"] / monthlyTotalHours;
+
+            Profile.data = {
+                
+                ...Profile.data,
+                ...req.body,
+                "value-hour": valueHour
+
+            }
+            return res.redirect('/profile')
+        }
 
     }
 }
@@ -63,25 +93,25 @@ const Job = {
                     ...job, //espalhamento
                    remaining,
                     status,
-                    budget: profile["value-hour"] * job["total-hours"] //calculo de hora
+                    budget: Profile.data["value-hour"] * job["total-hours"] //calculo de hora
             
                 }
             })
             
             
-            return res.render(filePath + "index", {profile: profile, jobs: updatedJobs })
+            return res.render(filePath + "index", {profile: Profile.data, jobs: updatedJobs })
             
         },
         create(req, res){
 
-            res.render(filePath + "job")
+           res.render(filePath + "job")
 
         },
         save(req, res){
 
             const lastId = Job.data[Job.data.length - 1]?.id || 1;
 
-            jobs.push({
+            Job.data.push({
 
                 id: lastId + 1,
                 name: req.body.name,
@@ -91,7 +121,7 @@ const Job = {
 
             });
 
-            return res.redirect('/  ')
+            return res.redirect('/')
         },
 
     },
@@ -125,6 +155,7 @@ routes.get('/', Job.controllers.index);
 routes.get('/job', Job.controllers.create);
 routes.post('/job', Job.controllers.save);
 routes.get('/job/edit', (req,res) => res.render(filePath + "job-edit"));
-routes.get('/profile', profile.controllers.index );
+routes.get('/profile', Profile.controllers.index );
+routes.post('/profile', Profile.controllers.update);
 
 module.exports = routes;
