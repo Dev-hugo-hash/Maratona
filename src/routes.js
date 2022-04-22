@@ -1,6 +1,7 @@
 const express = require('express');
 const routes = express.Router()
 const filePath = __dirname + '/views/'
+
 const Profile = {
     
     data: {
@@ -204,7 +205,7 @@ const Job = {
             const timeDiffInMs = dueDate - Date.now() //Diferença de dias 
                 //Transformar Milli em dias
             const dayInMs = 1000 * 60 * 60 * 24
-               const dayDiff = Math.floor(timeDiffInMs / dayInMs)//diferenca em dias arredonada para baixo
+            const dayDiff = Math.floor(timeDiffInMs / dayInMs)//diferenca em dias arredonada para baixo
         
             return dayDiff;
         },
@@ -214,8 +215,6 @@ const Job = {
     },
 
 }
-
-
 
 routes.get('/', Job.controllers.index);
 routes.get('/job', Job.controllers.create);
