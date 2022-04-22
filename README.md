@@ -45,11 +45,11 @@
 
     - Dentro do arquivo, abra o terminal e digite:
 
-      ## NPM i 
+      * NPM i 
 
     - Após as dependencias terem sido instaladas, execute:
 
-      ## npm run dev
+      * npm run dev
 
 ## 🚀 Tecnologias
 
