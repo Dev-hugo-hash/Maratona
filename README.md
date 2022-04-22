@@ -3,15 +3,9 @@
   <img alt="JobsCalc" title="JobsCalc" src="https://i.imgur.com/Veqm7Gh.png" width="220px" />
 </h1>
 <br>
-<h2> 
-   Etapa 1/4, Criar rotas e utilizar o template EJS para deixar um código mais limpo 
+<h> 
+  Vale ressaltar que este projeto está sendo feito após as aulas  da maratona discover, após absorver o conteudo da aula, estou aplicando sozinho neste projeto
 </h2>
-<br>
-<h2> Etapa 2/4, Tratar os formulários, criar rotas Post, Salvar Jobs, Editar, Deletar Jobs, Criar Calculo de horas </h2>
-<br>
-<h3> 
-  Vale ressaltar que este projeto está sendo feito após a aula 1 da maratona discover, após absorver o conteudo da aula, estou aplicando sozinho neste projeto
-</h3>
 <br>
 <p align="center">
   <a href="#-tecnologias">Tecnologias</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
@@ -31,6 +25,31 @@
 <p align="center">
   <img alt="dev.finances" src=".github/jobscalc.png" width="100%">
 </p>
+
+## Está afim de rodar o projeto localmente na sua máquina?
+  Você vai precisar do seguinte:
+  - Repositório:
+
+    - Faça o Fork deste repositório em https://github.com/Dev-hugo-hash/Maratona.
+
+  - NodeJS
+      
+    - Acesse https://nodejs.org/en/;
+    - Clique no botão de download correspondente a seu sistema operacional
+    <p align="center">
+      <img alt="Imagem do google" src="/Users/hugosilva/Documents/Maratona/public/images/Captura deTela 2022-04-21 às 21.42.30.png">
+    </p>
+    - Até o final da instalação, você já terá o Node e o NPM(Muito necessário).
+
+  - Iniciar
+
+    - Dentro do arquivo, abra o terminal e digite:
+
+      ## NPM i 
+
+    - Após as dependencias terem sido instaladas, execute:
+
+      ## npm run dev
 
 ## 🚀 Tecnologias
 
