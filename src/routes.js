@@ -1,6 +1,6 @@
 const express = require('express');
 const routes = express.Router()
-
+const filePath = __dirname + '/views/'
 const Profile = {
     
     data: {
@@ -64,14 +64,17 @@ const Job = {
             name: "Pizzaria Grego",
             "daily-hours": 2,
             "total-hours": 1,   
-            created_at: Date.now()
+            created_at: Date.now(),
+   
+
         },
         {
             id:2,
             name: "One Two Project",
             "daily-hours": 3,
             "total-hours": 47,   
-            created_at: Date.now()
+            created_at: Date.now(),
+          
         },
 
     ],
@@ -93,7 +96,7 @@ const Job = {
                     ...job, //espalhamento
                    remaining,
                     status,
-                    budget: Profile.data["value-hour"] * job["total-hours"] //calculo de hora
+                    budget: Job.services.calculateBudget(job, Profile.data["value-hour"])
             
                 }
             })
@@ -109,7 +112,7 @@ const Job = {
         },
         save(req, res){
 
-            const lastId = Job.data[Job.data.length - 1]?.id || 1;
+            const lastId = Job.data[Job.data.length - 1]?.id || 0;
 
             Job.data.push({
 
@@ -123,7 +126,68 @@ const Job = {
 
             return res.redirect('/')
         },
+        show(req, res){
+        //retirar job do Data para edita-lo
+            
+            const jobId = req.params.id
 
+            //para cada funcao se ele encontrar algo vai enviar pra mim 
+            const job = Job.data.find(job => Number(job.id) === Number(jobId)) //-> verificaçao do objeto, se encontrou o id, apresente
+
+            if(!job){
+
+                return res.send("Job not found!")
+
+            }
+            job.budget = Job.services.calculateBudget(job, Profile.data["value-hour"])
+
+            return res.render(filePath + "job-edit", { job })
+
+        },
+        update(req, res){
+
+            const jobId = req.params.id
+
+            //para cada funcao se ele encontrar algo vai enviar pra mim 
+            const job = Job.data.find(job => Number(job.id) === Number(jobId)) //-> verificaçao do objeto, se encontrou o id, apresente
+
+            if(!job){
+
+                return res.send("Job not found!")
+
+            }
+
+            const updatedJob = {
+
+                ...job,
+                name: req.body.name,
+                "total-hours": req.body["total-hours"],
+                "daily-hours": req.body["daily-hours"],
+            }
+            Job.data = Job.data.map(job =>{
+
+                if(Number(job.id) === Number(jobId)){
+
+                    job = updatedJob
+
+                }
+
+                return job
+            })
+            res.redirect('/job/' + jobId)
+        },
+        delete(req, res){
+
+            const jobId =req.params.id
+            
+            //Filter = Filtrar(Quando encontrar um true ele vai tirar da aplicaçao (filtrar))
+            //Se o ID enviado for diferente mantem ele 
+            //Quando encontrar um false ele tira(filtra) gerando um novo array 
+            Job.data = Job.data.filter(job => Number(job.id) !== Number(jobId))
+
+            return res.redirect('/')
+
+        },
     },
 
     //funções auxiliares
@@ -145,16 +209,20 @@ const Job = {
             return dayDiff;
         },
 
+        calculateBudget: (job,valueHour) => valueHour * job["total-hours"] //calculo de hora
+
     },
 
 }
 
-const filePath = __dirname + '/views/'
+
 
 routes.get('/', Job.controllers.index);
 routes.get('/job', Job.controllers.create);
 routes.post('/job', Job.controllers.save);
-routes.get('/job/edit', (req,res) => res.render(filePath + "job-edit"));
+routes.get('/job/:id', Job.controllers.show);
+routes.post('/job/:id', Job.controllers.update);
+routes.post('/job/delete/:id', Job.controllers.delete);
 routes.get('/profile', Profile.controllers.index );
 routes.post('/profile', Profile.controllers.update);
 
